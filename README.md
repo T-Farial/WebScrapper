@@ -1,36 +1,71 @@
 # Web Scraper & Data Cleaner
 
-A Python web-scraping application that collects book data from a public practice website, cleans and validates the results, and exports the final dataset to CSV.
+A Python application that collects book data from a public web-scraping practice website, cleans and validates the data, and exports the results as a structured CSV dataset.
 
-## What It Does
+## Project Overview
 
-The application follows a simple data-processing pipeline:
+This project demonstrates a complete data-processing workflow:
 
-**Fetch → Extract → Clean → Validate → Save**
+**Fetch → Extract → Clean → Validate → Export**
 
-It:
+The application:
 
-* Fetches webpage content using `requests`
-* Parses HTML using BeautifulSoup
+* Fetches webpage content using `Requests`
+* Parses HTML using `BeautifulSoup`
 * Extracts book titles, prices, and ratings
-* Converts raw prices and ratings into usable numeric values
+* Converts raw values into usable numeric data
 * Removes incomplete and duplicate records
-* Validates the cleaned data
-* Exports the final dataset to CSV
-* Verifies that the CSV was created successfully
+* Validates the cleaned dataset
+* Exports the final results to CSV
+* Verifies that the output file was created successfully
 
-## Technologies
+## Demo
 
-* Python
-* Requests
-* BeautifulSoup
-* Pandas
-* Regular Expressions
-* CSV / File Handling
+### Successful Run
 
-## Data Source
+![Successful Run](screenshots/SuccessfulRun.png)
 
-The project uses [Books to Scrape](https://books.toscrape.com/), a public website specifically designed for practicing web scraping.
+The scraper successfully connected to the website, extracted 20 records, validated the data, and generated the CSV output.
+
+### Cleaned Dataset
+
+![Scraped Books](screenshots/ScrapedBook.png)
+
+The resulting dataset contains three structured fields:
+
+* `title`
+* `price`
+* `rating`
+
+### Error Handling
+
+![Error Handling](screenshots/ErrorHandling.png)
+
+The application handles connection failures and invalid URLs without producing an unhandled Python traceback.
+
+## Data Processing
+
+Raw scraped values are transformed into structured data.
+
+Examples:
+
+```text
+"£51.77" → 51.77
+"Five"   → 5.0
+```
+
+The cleaning process also:
+
+* Removes records missing required fields
+* Removes duplicate book titles
+* Converts prices to numeric values
+* Converts ratings from words to numbers
+
+The validation stage checks that:
+
+* Price is greater than 0
+* Rating is between 1 and 5
+* Title is not empty
 
 ## Error Handling
 
@@ -47,41 +82,17 @@ The application includes handling for:
 * Empty datasets
 * CSV export failures
 
-The program is designed to fail gracefully rather than producing an unhandled traceback.
-
-## Data Cleaning
-
-Raw scraped data is transformed into a structured dataset.
-
-Examples include:
-
-* `"£51.77"` → `51.77`
-* `"Five"` → `5.0`
-* Missing titles or prices → removed
-* Duplicate book titles → removed
-* Invalid prices or ratings → rejected during validation
+The goal is to fail gracefully and provide useful feedback instead of producing an unhandled traceback.
 
 ## Output
 
-The program produces:
+The program creates:
 
 ```text
 scraped_books.csv
 ```
 
-with the following columns:
-
-```text
-title
-price
-rating
-```
-
-The current test run successfully extracted and validated **20 records**.
-
-## Example
-
-Example output:
+Example structure:
 
 | title                | price | rating |
 | -------------------- | ----: | -----: |
@@ -89,6 +100,21 @@ Example output:
 | Tipping the Velvet   | 53.74 |      1 |
 | Soumission           | 50.10 |      1 |
 | Sharp Objects        | 47.82 |      4 |
+
+The test run successfully produced **20 validated records**.
+
+## Technologies
+
+* Python
+* Requests
+* BeautifulSoup
+* Pandas
+* Regular Expressions
+* CSV processing
+
+## Data Source
+
+This project uses [Books to Scrape](https://books.toscrape.com/), a public website designed specifically for practicing web scraping.
 
 ## How to Run
 
@@ -98,26 +124,13 @@ Install the required libraries:
 pip install requests beautifulsoup4 pandas
 ```
 
-Run the program:
+Run the application:
 
 ```bash
 python DataCWebS.py
 ```
 
-The program will fetch the data, process it, validate it, and create `scraped_books.csv`.
-
-## Testing
-
-The application was tested for:
-
-* Successful scraping
-* HTTP 200 responses
-* Invalid URLs
-* Connection failures
-* Unexpected webpage structures
-* Missing and invalid data
-* Invalid validation values
-* CSV creation and verification
+The program will fetch the webpage, extract the data, clean and validate it, and create `scraped_books.csv`.
 
 ## Skills Demonstrated
 
@@ -129,6 +142,8 @@ This project demonstrates practical experience with:
 * Data cleaning
 * Data validation
 * Pandas DataFrames
+* Regular expressions
 * Exception handling
-* File and CSV processing
-* Building a modular data pipeline
+* CSV processing
+* Modular programming
+* Building a complete data-processing pipeline
